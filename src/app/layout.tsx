@@ -6,8 +6,8 @@ import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Research Blog",
-  description: "A blog detailing findings from an Honours project.",
+  title: "Research Journal",
+  description: "Personal research journal.",
 };
 
 export default function RootLayout({
