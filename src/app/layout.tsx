@@ -25,14 +25,13 @@ export default function RootLayout({
                 <Link href="/" className="text-xl font-bold hover:opacity-80">
                   Research Journal
                 </Link>
-                <ThemeSwitcher />
               </div>
             </header>
 
             <div className="flex-grow">{children}</div>
             <footer className="border-t border-border py-4 text-center text-sm text-foreground/60">
               <div className="container mx-auto">
-                Honours Project - {new Date().getFullYear()}
+                Research Journal - {new Date().getFullYear()}
               </div>
             </footer>
           </div>
