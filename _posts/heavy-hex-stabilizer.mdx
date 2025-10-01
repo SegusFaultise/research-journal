@@ -6,17 +6,19 @@ excerpt: 'A research simulation investigating the performance of topological sta
 ---
 
 ### Introduction
-The heavy-hexagonal lattice, used in modern quantum processors, may offer **asymmetric protection** against different types of quantum errors due to its unique geometry of different-sized error-correcting codes (stabilisers).
+
+The heavy-hexagonal lattice, used in modern quantum processors, may offer **asymmetric protection** against different types of quantum errors. This is due to its unique geometry, which utilizes different-sized error-correcting codes, known as stabilisers.
 
 ### The Hardware and Code Layout
-The simulation is based on the 27-qubit `FakeMontrealV2` backend, which mimics the heavy-hex topology of a real IBM Falcon r5 processor. The static diagram below shows the full qubit layout and highlights the three representative stabilisers used in this study: two 3-qubit Z-type vertex stabilisers (`v0_Z`, `v1_Z`) and one 7-qubit X-type face stabiliser (`f0_X`).
 
-![Lattice Overview with all stabilisers highlighted](/images/lattice_overview.png)
+The simulation is based on the 27-qubit `FakeMontrealV2` backend, which mimics the heavy-hex topology of a real IBM Falcon r5 processor. The diagram below illustrates the full qubit layout and highlights the three representative stabilisers used in this study: two 3-qubit Z-type vertex stabilisers (`v0_Z`, `v1_Z`) and one 7-qubit X-type face stabiliser (`f0_X`).
 
-For a more detailed exploration of the qubit connectivity, the interactive diagram below can be used.
+<img src="/research-journal/images/lattice_overview.png" alt="Diagram of the 27-qubit IBM Montreal lattice with vertex and face stabilisers highlighted." className="w-full md:w-5/6 mx-auto" />
+
+For a more detailed exploration of the qubit connectivity, the interactive diagram below provides a hands-on view.
 
 <iframe
-  src="/interactive_lattice.html"
+  src="/research-journal/interactive_lattice.html"
   width="100%"
   height="600px"
   style={{ border: '0px solid #ccc', borderRadius: '0px' }}
@@ -25,29 +27,31 @@ For a more detailed exploration of the qubit connectivity, the interactive diagr
 <br/>
 
 ### The Method: Stabiliser Measurement Circuits
-To detect errors, specific quantum circuits are used to measure the value of a stabiliser without disturbing the encoded quantum information. An error is detected if the measurement outcome is `1`. Below are the circuits used to measure a Z-type vertex stabiliser and the more complex X-type face stabiliser, each with a manually inserted error to demonstrate the detection mechanism.
+To detect errors, specific quantum circuits measure a stabiliser's value without disturbing the encoded quantum information. An error is flagged if the measurement outcome is `1`. The circuits below demonstrate this detection mechanism for both a Z-type and an X-type stabiliser, each with a manually inserted error.
 
 #### Z-Type Vertex Stabiliser (`v0_Z`)
-This circuit measures the `v0_Z` stabiliser, composed of 3 qubits. The manually inserted `X` error is correctly detected by the ancilla qubit at the end.
-![Circuit Diagram for a Z-Type Stabiliser](/images/circuit_diagram_v0_Z_with_error.png)
+This circuit measures the 3-qubit `v0_Z` stabiliser. As shown, the manually inserted `X` error is correctly detected by the ancilla qubit.
+<img src="/research-journal/images/circuit_diagram_v0_Z_with_error.png" alt="Quantum circuit diagram for a Z-type stabiliser measurement." className="w-full bg-white p-4" />
+
 
 #### X-Type Face Stabiliser (`f0_X`)
-This circuit measures the `f0_X` stabiliser, composed of 7 qubits. The manually inserted `Z` error is correctly detected.
-![Circuit Diagram for an X-Type Stabiliser](/images/circuit_diagram_f0_X_with_error.png)
+This more complex circuit measures the 7-qubit `f0_X` stabiliser, correctly detecting the inserted `Z` error.
+<img src="/research-journal/images/circuit_diagram_f0_X_with_error.png" alt="Quantum circuit diagram for an X-type stabiliser measurement." className="w-full bg-white p-4" />
+
 
 ### Results: Performance Under Noise
-To test the central hypothesis, I ran a simulation on the larger X-type face stabiliser (`f0_X`) under two different types of noise, **bit-flip (X) noise** and **phase-flip (Z) noise**. The physical error rate was swept from 0.03% to 3%, and for each point, I measured the "stabiliser failure rate" (the probability of getting an incorrect measurement).
+To test the central hypothesis, I ran a simulation on the larger X-type face stabiliser (`f0_X`) under two different noise channels: **bit-flip (X) noise** and **phase-flip (Z) noise**. The physical error rate was swept from 0.03% to 3%, and for each point, I measured the "stabiliser failure rate" (the probability of an incorrect measurement).
 
-The plot below shows the results.
+The plot below shows these results.
 
-![Error Threshold Plot for f0_X stabiliser](/images/error_threshold_plot_f0_X.png)
+<img src="/research-journal/images/error_threshold_plot_f0_X.png" alt="Error threshold plot showing stabiliser failure rate vs. physical error rate for bit-flip and phase-flip noise." className="w-full md:w-4/5 mx-auto" />
 
 #### Interpretation
 The results clearly show that the performance of the X-type stabiliser is highly dependent on the noise channel.
-* It is **highly sensitive to phase-flip (Z) noise**, with the failure rate rising sharply along with the physical error rate. This is expected, as an X-type stabiliser is designed to detect Z-type errors.
+* It is **highly sensitive to phase-flip (Z) noise**, with the failure rate rising sharply with the physical error rate. This is expected, as an X-type stabiliser is designed to detect Z-type errors.
 * It is **extremely resilient to bit-flip (X) noise**, with a failure rate that remains very low even as the physical error rate increases.
 
-This significant difference between the two curves provides strong initial evidence of asymmetric error protection.
+This significant difference between the two curves provides strong initial evidence to support the hypothesis of asymmetric error protection.
 
 ### Conclusion
 This simulation successfully demonstrates the core mechanics of stabiliser checks and provides preliminary data supporting the central research hypothesis. The clear difference in performance against different noise channels suggests that the geometry of the heavy-hex code could be exploited for hardware with biased noise. The next stage of this research would be to expand this simulation to a fully encoded logical qubit to measure the logical error rate and calculate a precise error threshold.
