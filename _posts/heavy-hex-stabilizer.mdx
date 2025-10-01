@@ -1,0 +1,37 @@
+---
+title: 'Asymmetric Error Correction on a Heavy-Hex Lattice'
+date: '2025-09-28'
+author: 'Zakk Wilson-Christian'
+excerpt: 'A proof-of-concept simulation exploring the mechanics of a topological code on a realistic 27-qubit heavy-hexagonal lattice from an IBM Falcon processor.'
+---
+
+### Introduction
+This post details a simulation built to explore a potential Honours project. The central hypothesis is that the heavy-hexagonal lattice, used in modern quantum processors, may offer asymmetric protection against different types of quantum errors due to its unique geometry.
+
+### The Hardware: IBM's Falcon Processor
+
+The simulation is based on the 27-qubit `FakeMontrealV2` backend, which mimics the heavy-hex topology of a real IBM Falcon r5 processor. The interactive diagram below shows the qubit connectivity.
+
+<iframe
+  src="https://www.test.com"
+  width="100%"
+  height="600px"
+  style={{ border: '1px solid #ccc', borderRadius: '0px' }}
+  title="Interactive Qubit Lattice"
+/>
+
+### Stabiliser Visuals
+
+We defined and tested three representative stabilisers: two Z-type vertex stabilisers (`v0`, `v1`) and one X-type face stabiliser (`f0`). The following visualizations show the lattice location and the quantum circuit used to check for errors for the `f0` stabiliser.
+
+![Lattice and Circuit for f0](/images/stabiliser_viz_f0.png)
+
+### Simulation Results
+
+An ideal, noiseless simulation was run to verify the error detection mechanism. The results below show a perfect detection rate: the "With Error" case correctly measures a `1` (error detected), while the "No Error" case correctly measures a `0`.
+
+![Summary of results](/images/simulation_results_summary.png)
+
+### Conclusion
+
+This proof-of-concept successfully demonstrates the core mechanics of stabiliser checks on a realistic hardware topology. The next stage of this research involves introducing a noise model to measure the error threshold and quantify the code's performance against different error channels.
